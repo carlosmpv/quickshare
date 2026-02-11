@@ -8,26 +8,72 @@
     <script src="vendor/dompurify/dist/purify.min.js"></script>
     <link rel="icon" href="https://raw.githubusercontent.com/carlosmpv/quickshare/refs/heads/main/logo.svg" type="image/svg+xml">
 
+    <meta name="description" content="Quick Share MD - Instantly share Markdown via URL. Real-time editor, safe preview, no server required.">
+    <meta name="keywords" content="markdown, share markdown, markdown editor, quick share, markdown to html, gzip compression, real-time editor">
+    <meta name="author" content="Quick Share">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Quick Share MD - Instant Markdown Sharing">
+    <meta property="og:description" content="Create and share Markdown documents with a single link. No signup, free, instant.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com">
+    <meta property="og:image" content="https://raw.githubusercontent.com/carlosmpv/quickshare/refs/heads/main/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quick Share MD">
+    <meta name="twitter:description" content="Markdown editor with URL-based sharing">
+    <link rel="canonical" href="https://your-domain.com">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
     <style>
         html, body {
             margin: 0px;
             padding: 0px;
         }
 
+        * {
+            box-sizing: border-box;
+        }
 
         #editor {
             width: 100vw;
             height: 100vh;
             overflow-y: scroll;
+            overflow-x: auto;
             padding: 2em;
             font-family: 'Courier New', Courier, monospace;
+            word-wrap: break-word;
         }
 
     </style>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Quick Share MD",
+            "applicationCategory": "WebApplication",
+            "operatingSystem": "All",
+            "description": "Client-side Markdown editor with URL-based sharing via gzip compression",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": [
+                "Real-time Markdown editor",
+                "Gzip compression",
+                "URL sharing without server storage"
+            ],
+            "softwareVersion": "1.0",
+            "url": "https://carlosmpv.github.io/quickshare/"
+        }
+    </script>
 </head>
 <body>
     <base target="_blank">
-    <div id="editor" contenteditable="true"></div>
+    <div id="editor" contenteditable="true" aria-label="Markdown editor" role="textbox"></div>
 
     <script>
         async function compress(text) {
@@ -81,7 +127,6 @@
             target.querySelectorAll('a').forEach(link => {
                 link.setAttribute('contenteditable', 'false');
                 link.addEventListener('click', (e) => {
-                    console.log('clicou no link')
                     e.stopPropagation();
                 });
             })
@@ -93,7 +138,6 @@
 
         async function handleRenderRaw() {
             const q = window.location.search.substring(1).split('=')[1];
-            console.log(q)
             if (q) await decompress(q).then(writeOnEditor);
         }
 
