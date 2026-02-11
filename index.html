@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+    <script src="vendor/dompurify/dist/purify.min.js"></script>
+    
 
     <style>
         html, body {
@@ -74,7 +76,7 @@
         }
 
         function renderMarkdown(target) {
-            target.innerHTML = marked.parse(target.innerText)
+            target.innerHTML = DOMPurify.sanitize(marked.parse(target.innerText))
             
             target.querySelectorAll('a').forEach(link => {
                 link.setAttribute('contenteditable', 'false');
